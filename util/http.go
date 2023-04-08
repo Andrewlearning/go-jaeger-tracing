@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func SendHttp(method, url string, span opentracing.Span, tracer opentracing.Tracer) {
+func SendHttp(serviceName, method, url string, span opentracing.Span, tracer opentracing.Tracer) {
 	httpClient := &http.Client{
 		Transport: &nethttp.Transport{},
 	}
@@ -22,7 +22,6 @@ func SendHttp(method, url string, span opentracing.Span, tracer opentracing.Trac
 		log.Printf("Failed to inject span context into HTTP headers: %v", err)
 	}
 
-	// 发送请求并获取响应
 	res, err := httpClient.Do(req)
 	if err != nil {
 		log.Fatalf("Failed to send HTTP request: %v", err)
@@ -33,6 +32,6 @@ func SendHttp(method, url string, span opentracing.Span, tracer opentracing.Trac
 	}
 	defer res.Body.Close()
 
-	// 处理响应
-	fmt.Printf("Response status: %s, res.Body:%v\n", res.Status, string(body))
+	// Print out the result
+	fmt.Printf("[%v] Response status: %s, res.Body:%v\n", serviceName, res.Status, string(body))
 }

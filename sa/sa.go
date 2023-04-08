@@ -41,5 +41,5 @@ func main() {
 	spanID := spanCtx.(jaeger.SpanContext).SpanID()
 	log.Printf("[Service A] traceID: %v, parentID: %v, spanID:%v\n", traceID, parentID, spanID)
 
-	util.SendHttp("POST", "http://localhost:8080/process-request-b", span, tracer)
+	util.SendHttp(cfg.ServiceName, "POST", "http://localhost:8081/process-request-b", span, tracer)
 }

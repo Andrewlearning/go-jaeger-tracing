@@ -48,8 +48,8 @@ func main() {
 		log.Printf("[Service B] traceID: %v, parentID: %v, spanID:%v\n", traceID, parentID, spanID)
 		fmt.Fprint(w, "Request processed successfully")
 
-		util.SendHttp("POST", "http://localhost:8082/process-request-c", span, tracer)
+		util.SendHttp(cfg.ServiceName, "POST", "http://localhost:8082/process-request-c", span, tracer)
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nethttp.Middleware(tracer, http.DefaultServeMux)))
+	log.Fatal(http.ListenAndServe(":8081", nethttp.Middleware(tracer, http.DefaultServeMux)))
 }

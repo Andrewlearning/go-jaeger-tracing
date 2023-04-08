@@ -16,7 +16,7 @@ import (
 func main() {
 	util.InitLogger()
 	defer util.DisposeLogger()
-	// 设置 Jaeger 配置
+
 	cfg := config.Configuration{
 		ServiceName: "service-c",
 		Sampler: &config.SamplerConfig{
